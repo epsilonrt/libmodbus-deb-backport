@@ -1,8 +1,8 @@
-# Backport du paquet Debian libmodbus en version Testing (3.1.4-2)
+# Backport _testing_ libmodbus 3.1.4
 
 Source: [SimpleBackportCreation](https://wiki.debian.org/fr/SimpleBackportCreation)
 
-On va faire un backport des paquets libmodbus depuis la distribution Debian 
+On va faire un backport des paquets  libmodbus depuis la distribution Debian 
 Testing.  
 
 Ici nous le faisons sur une architecture `arm64`, mais cela peut se faire sur 
@@ -18,7 +18,7 @@ partir de ce tutoriel, il vous suffit d'installer le dépôt
 
 Puis, vous pouvez installer :
 
-    sudo apt install libmodbus-dev
+    $ sudo apt install libmodbus-dev
 
 Ou mettre à jour :
 
@@ -113,6 +113,11 @@ Modifiez en fonction de votre distribution, par exemple pour xenial:
     dpkg-deb: building package 'libmodbus5-dbgsym' in '../libmodbus5-dbgsym_3.1.4-2~epsi+1_arm64.deb'.
     dpkg-deb: building package 'libmodbus5' in '../libmodbus5_3.1.4-2~epsi+1_arm64.deb'.
     dpkg-deb: building package 'libmodbus-dev' in '../libmodbus-dev_3.1.4-2~epsi+1_arm64.deb'.
+
+Si l'on souhaite recompiler après une modification, il faudra au préalable faire un `clean`
+
+    $ fakeroot debian/rules clean
+
 
 ### Vérifiez les paquets
 
