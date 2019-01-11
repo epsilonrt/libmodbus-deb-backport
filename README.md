@@ -31,16 +31,16 @@ architectures.
 
 ## Procédure pour le backport
 
-* Installez les outils d'empaquetage pour Debian
+### Installez les outils d'empaquetage pour Debian
 
     $ sudo apt-get install packaging-dev debian-keyring devscripts equivs libdistro-info-perl
 
-* Cloner le dépôt et y descendre
+### Cloner le dépôt et y descendre
 
     $ git clone https://github.com/epsilonrt/libmodbus-deb-backport.git
     $ cd libmodbus-deb-backport
 
-* Trouvez quelle est la version disponible dans l'archive Debian
+### Trouvez quelle est la version disponible dans l'archive Debian
 
     $ rmadison libmodbus5 --architecture arm64
     libmodbus5 | 3.0.6-1       | oldstable  | arm64
@@ -48,7 +48,7 @@ architectures.
     libmodbus5 | 3.1.4-2       | testing    | arm64
     libmodbus5 | 3.1.4-2       | unstable   | arm64
 
-* Téléchargez le fichier source .dsc de la version Testing
+### Téléchargez le fichier source .dsc de la version Testing
 
 Avec votre navigateur, allez à la page http://packages.debian.org/testing/libmodbus5 
 et cherchez le fichier dsc et copiez l'adresse du lien : 
@@ -85,11 +85,11 @@ Modifiez en fonction de votre distribution, par exemple pour xenial `amd64` :
 
     $ dget -x -u https://launchpad.net/ubuntu/+archive/primary/+sourcefiles/libmodbus/3.1.4-2/libmodbus_3.1.4-2.dsc
 
-* Installez les dépendances de `libmodbus`
+### Installez les dépendances de `libmodbus`
 
     $ sudo apt install debhelper asciidoc xmlto psmisc
 
-* Mettez un numéro de révision de backport dans le journal des modifications
+### Mettez un numéro de révision de backport dans le journal des modifications
 
     $ cd libmodbus-3.1.4
     $ dch --local ~epsi+ --distribution stretch  "build for stretch-backports."
@@ -98,11 +98,11 @@ Modifiez en fonction de votre distribution, par exemple pour xenial:
 
     $ dch --local ~epsi+ --distribution xenial  "build for xenial-backports."
 
-* Correction du fichier `libmodbus-dev.docs`
+### Correction du fichier `libmodbus-dev.docs`
 
     $ cp ../libmodbus-dev.docs debian
 
-* Compilez correctement le paquet, sans signature GPG
+### Compilez correctement le paquet, sans signature GPG
 
     $ fakeroot debian/rules binary
     dh binary --with autoreconf --exclude=.la
@@ -114,7 +114,7 @@ Modifiez en fonction de votre distribution, par exemple pour xenial:
     dpkg-deb: building package 'libmodbus5' in '../libmodbus5_3.1.4-2~epsi+1_arm64.deb'.
     dpkg-deb: building package 'libmodbus-dev' in '../libmodbus-dev_3.1.4-2~epsi+1_arm64.deb'.
 
-* Vérifiez les paquets
+### Vérifiez les paquets
 
     $ cd ..
     $ dpkg -I libmodbus5_3.1.4-2~epsi+1_arm64.deb 
