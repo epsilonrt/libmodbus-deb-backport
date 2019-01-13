@@ -116,7 +116,10 @@ Modifiez en fonction de votre distribution, par exemple pour xenial:
     $ dch --local ~epsi+ --distribution xenial  "build for xenial-backports."
 
 
-### Correction du fichier `libmodbus-dev.docs`
+### Correction du fichier `libmodbus-dev.docs` 
+
+Cette opération doit être effectuée que si la version de `debhelper` est 
+inférieure à 11 (cas de `stretch` et `xenial`, mais pas pour `bionic`)
 
     $ cp ../libmodbus-dev.docs debian
 
