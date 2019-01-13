@@ -24,16 +24,15 @@ Ou mettre à jour :
 
     $ sudo apt upgrade
 
-Ce dépôt forunit les paquets Debian Stretch et Ubuntu Xenial pour les 
+Ce dépôt fournit les paquets Debian Stretch et Ubuntu Xenial pour les 
 architectures `arm64`, `armhf` et `arm64`. Dans le cas de Xenial, il faudra 
 remplacer `stretch` par `xenial` dans la ligne `add-apt-repository`.
-architectures.
 
 ## Procédure pour le backport
 
 ### Installez les outils d'empaquetage pour Debian
 
-    $ sudo apt-get install packaging-dev debian-keyring devscripts equivs libdistro-info-perl
+    $ sudo apt install --no-install-recommends packaging-dev debian-keyring devscripts equivs libdistro-info-perl
 
 ### Cloner le dépôt et y descendre
 
@@ -87,7 +86,25 @@ Modifiez en fonction de votre distribution, par exemple pour xenial `amd64` :
 
 ### Installez les dépendances de `libmodbus`
 
-    $ sudo apt install debhelper asciidoc xmlto psmisc
+    $ sudo apt install --no-install-recommends debhelper asciidoc xmlto psmisc
+
+Dans le cas de xenial, il faut que la version de debhelper soit en 10 au 
+minimum.
+
+    $ rmadison debhelper --architecture arm64
+     debhelper | 9.20131227ubuntu1           | trusty           | all
+     debhelper | 9.20160115ubuntu3           | xenial           | all
+     debhelper | 10.2.2ubuntu1~ubuntu16.04.1 | xenial-backports | all
+     debhelper | 11.1.6ubuntu1               | bionic           | all
+     debhelper | 11.1.6ubuntu2               | bionic-updates   | all
+     debhelper | 11.3.2ubuntu1               | cosmic           | all
+     debhelper | 12ubuntu1                   | disco            | all
+
+On voit qu'il faut l'installer depuis le dépôt xenial-backports :
+
+    $ sudo apt install -t xenial-backports debhelper
+    $ sudo apt install --no-install-recommends asciidoc xmlto psmisc
+    
 
 ### Mettez un numéro de révision de backport dans le journal des modifications
 
@@ -97,6 +114,7 @@ Modifiez en fonction de votre distribution, par exemple pour xenial `amd64` :
 Modifiez en fonction de votre distribution, par exemple pour xenial:
 
     $ dch --local ~epsi+ --distribution xenial  "build for xenial-backports."
+
 
 ### Correction du fichier `libmodbus-dev.docs`
 
