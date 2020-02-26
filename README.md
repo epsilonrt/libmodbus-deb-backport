@@ -59,6 +59,7 @@ On voit qu'il faut l'installer depuis le dépôt xenial-backports :
 ### Cloner le dépôt et y descendre
 
     $ git clone https://github.com/epsilonrt/libmodbus-deb-backport.git
+    $ git checkout epsilonrt
     $ cd libmodbus-deb-backport
     $ tar xvzf libmodbusepsi-3.1.4.orig.tar.gz
     $ cp -a debian libmodbusepsi-3.1.4
