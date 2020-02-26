@@ -64,8 +64,6 @@ On voit qu'il faut l'installer depuis le dépôt xenial-backports :
     $ tar xvzf libmodbusepsi-3.1.4.orig.tar.gz
     $ cp -a debian libmodbusepsi-3.1.4
     $ cd libmodbusepsi-3.1.4
-    $ cp ../debian/changelog debian
-    $ tar xvzf libmodbusepsi-3.1.4.orig.tar.gz
     $ for i in $(cat debian/patches/series); do patch -p1 < debian/patches/$i; done
 
 ### Compilez correctement le paquet, sans signature GPG
