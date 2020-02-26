@@ -106,7 +106,15 @@ On voit qu'il faut l'installer depuis le dépôt xenial-backports :
     $ sudo apt install --no-install-recommends asciidoc xmlto psmisc
     
 
-### Mettez un numéro de révision de backport dans le journal des modifications
+### Modifications
+
+Pour mettre à jour les sources avec les modifications epsilonrt :
+
+    $ cd libmodbus-3.1.4
+    $ cp ../debian/changelog debian
+    $ patch -p1 < ./debian/patches/Add-deactivation-of-RTU-address-filtering.patch
+
+Si pas de modification, mettre un numéro de révision de backport dans le journal des modifications
 
     $ cd libmodbus-3.1.4
     $ dch --local ~epsi+ --distribution stretch  "build for stretch-backports."
@@ -121,7 +129,7 @@ Modifiez en fonction de votre distribution, par exemple pour xenial:
 Cette opération doit être effectuée que si la version de `debhelper` est 
 inférieure à 11 (cas de `stretch` et `xenial`, mais pas pour `bionic`)
 
-    $ cp ../libmodbus-dev.docs debian
+    $ cp ../debian/libmodbus-dev.docs debian
 
 ### Compilez correctement le paquet, sans signature GPG
 

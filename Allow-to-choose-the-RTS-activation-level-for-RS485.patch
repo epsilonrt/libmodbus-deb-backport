@@ -1,0 +1,60 @@
+From 5c89b760b8c3c8e1edf2773a933a59e798a0c222 Mon Sep 17 00:00:00 2001
+From: epsilonrt <epsilonrt@gmail.com>
+Date: Fri, 12 Jan 2018 20:55:54 +0100
+Subject: [PATCH] Allow to choose the RTS activation level for RS485
+
+Signed-off-by: epsilonrt <epsilonrt@gmail.com>
+---
+ src/modbus-rtu.c | 11 ++++++++---
+ src/modbus-rtu.h |  4 ++++
+ 2 files changed, 12 insertions(+), 3 deletions(-)
+
+diff --git a/src/modbus-rtu.c b/src/modbus-rtu.c
+index 190298e..d67b24a 100644
+--- a/src/modbus-rtu.c
++++ b/src/modbus-rtu.c
+@@ -910,18 +910,23 @@ int modbus_rtu_set_serial_mode(modbus_t *ctx, int mode)
+         modbus_rtu_t *ctx_rtu = ctx->backend_data;
+         struct serial_rs485 rs485conf;
+ 
+-        if (mode == MODBUS_RTU_RS485) {
++        if ( (mode == MODBUS_RTU_RS485) || 
++              (mode == MODBUS_RTU_RS485_RTS_ON_SEND) ) {
+             // Get
+             if (ioctl(ctx->s, TIOCGRS485, &rs485conf) < 0) {
+                 return -1;
+             }
+             // Set
+             rs485conf.flags |= SER_RS485_ENABLED;
++            if (mode == MODBUS_RTU_RS485) {
++                rs485conf.flags |= SER_RS485_RTS_AFTER_SEND;
++            } else {
++                rs485conf.flags |= SER_RS485_RTS_ON_SEND;
++            }
+             if (ioctl(ctx->s, TIOCSRS485, &rs485conf) < 0) {
+                 return -1;
+             }
+-
+-            ctx_rtu->serial_mode = MODBUS_RTU_RS485;
++            ctx_rtu->serial_mode = mode;
+             return 0;
+         } else if (mode == MODBUS_RTU_RS232) {
+             /* Turn off RS485 mode only if required */
+diff --git a/src/modbus-rtu.h b/src/modbus-rtu.h
+index 214a888..a087180 100644
+--- a/src/modbus-rtu.h
++++ b/src/modbus-rtu.h
+@@ -21,6 +21,10 @@ MODBUS_API modbus_t* modbus_new_rtu(const char *device, int baud, char parity,
+ 
+ #define MODBUS_RTU_RS232 0
+ #define MODBUS_RTU_RS485 1
++/* RS485 set logical level for RTS pin equal to 0 after sending (RS485 default) */
++#define MODBUS_RTU_RS485_RTS_AFTER_SEND MODBUS_RTU_RS485 
++/* RS485 set logical level for RTS pin equal to 0 when sending */
++#define MODBUS_RTU_RS485_RTS_ON_SEND 2
+ 
+ MODBUS_API int modbus_rtu_set_serial_mode(modbus_t *ctx, int mode);
+ MODBUS_API int modbus_rtu_get_serial_mode(modbus_t *ctx);
+-- 
+2.11.0
+
