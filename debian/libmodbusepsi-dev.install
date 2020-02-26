@@ -1,0 +1,3 @@
+debian/tmp/usr/include/modbusepsi/*
+debian/tmp/usr/lib/*/libmodbusepsi.so
+debian/tmp/usr/lib/*/pkgconfig/libmodbusepsi.pc

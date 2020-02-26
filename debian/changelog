@@ -1,8 +1,20 @@
+libmodbusepsi (3.1.4-5) unstable; urgency=medium
+
+  * Update documentation for reception filter flag
+
+ -- Pascal Jean (epsilonrt) <epsilonrt@gmail.com>  Wed, 26 Feb 2020 16:09:45 +0100
+
+libmodbusepsi (3.1.4-4) unstable; urgency=medium
+
+  * Create a new variant of libmodbus, ie libmodbusepsi
+
+ -- Pascal Jean (epsilonrt) <epsilonrt@gmail.com>  Wed, 26 Feb 2020 15:42:27 +0100
+
 libmodbus (3.1.4-3) unstable; urgency=medium
 
   * Add deactivation of RTU address filtering
 
- -- Pascal JEAN (epsilonrt) <epsilonrt@gmail.com>  Wed, 26 Feb 2020 00:33:40 +0100
+ -- Pascal Jean (epsilonrt) <epsilonrt@gmail.com>  Wed, 26 Feb 2020 00:19:35 +0100
 
 libmodbus (3.1.4-2) unstable; urgency=medium
 

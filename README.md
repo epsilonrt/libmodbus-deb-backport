@@ -1,4 +1,4 @@
-# Backport _testing_ libmodbus 3.1.4
+# Backport _testing_ libmodbus 3.1.4 vers libmodbusepsi
 
 Source: [SimpleBackportCreation](https://wiki.debian.org/fr/SimpleBackportCreation)
 
@@ -18,7 +18,7 @@ partir de ce tutoriel, il vous suffit d'installer le dépôt
 
 Puis, vous pouvez installer :
 
-    $ sudo apt install libmodbus-dev
+    $ sudo apt install libmodbusepsi-dev
 
 Ou mettre à jour :
 
@@ -33,56 +33,6 @@ remplacer `stretch` par `xenial` dans la ligne `add-apt-repository`.
 ### Installez les outils d'empaquetage pour Debian
 
     $ sudo apt install --no-install-recommends packaging-dev debian-keyring devscripts equivs libdistro-info-perl
-
-### Cloner le dépôt et y descendre
-
-    $ git clone https://github.com/epsilonrt/libmodbus-deb-backport.git
-    $ cd libmodbus-deb-backport
-
-### Trouvez quelle est la version disponible dans l'archive Debian
-
-    $ rmadison libmodbus5 --architecture arm64
-    libmodbus5 | 3.0.6-1       | oldstable  | arm64
-    libmodbus5 | 3.0.6-2       | stable     | arm64
-    libmodbus5 | 3.1.4-2       | testing    | arm64
-    libmodbus5 | 3.1.4-2       | unstable   | arm64
-
-### Téléchargez le fichier source .dsc de la version Testing
-
-Avec votre navigateur, allez à la page http://packages.debian.org/testing/libmodbus5 
-et cherchez le fichier dsc et copiez l'adresse du lien : 
-
-
-    $ dget -x http://deb.debian.org/debian/pool/main/libm/libmodbus/libmodbus_3.1.4-2.dsc
-    dget: retrieving http://deb.debian.org/debian/pool/main/libm/libmodbus/libmodbus_3.1.4-2.dsc
-      % Total    % Received % Xferd  Average Speed   Time    Time     Time  Current
-                                     Dload  Upload   Total   Spent    Left  Speed
-    100   334  100   334    0     0    813      0 --:--:-- --:--:-- --:--:--   814
-    100  1946  100  1946    0     0   2987      0 --:--:-- --:--:-- --:--:--  2987
-    dget: retrieving http://deb.debian.org/debian/pool/main/libm/libmodbus/libmodbus_3.1.4.orig.tar.gz
-      % Total    % Received % Xferd  Average Speed   Time    Time     Time  Current
-                                     Dload  Upload   Total   Spent    Left  Speed
-    100   340  100   340    0     0   1308      0 --:--:-- --:--:-- --:--:--  1312
-    100 92596  100 92596    0     0   168k      0 --:--:-- --:--:-- --:--:--  168k
-    dget: retrieving http://deb.debian.org/debian/pool/main/libm/libmodbus/libmodbus_3.1.4-2.debian.tar.xz
-      % Total    % Received % Xferd  Average Speed   Time    Time     Time  Current
-                                     Dload  Upload   Total   Spent    Left  Speed
-    100   344  100   344    0     0   2398      0 --:--:-- --:--:-- --:--:--  2405
-    100  7540  100  7540    0     0  27982      0 --:--:-- --:--:-- --:--:-- 27982
-    libmodbus_3.1.4-2.dsc:
-          Good signature found
-       validating libmodbus_3.1.4.orig.tar.gz
-       validating libmodbus_3.1.4-2.debian.tar.xz
-    All files validated successfully.
-    dpkg-source: info: extraction de libmodbus dans libmodbus-3.1.4
-    dpkg-source: info: extraction de libmodbus_3.1.4.orig.tar.gz
-    dpkg-source: info: extraction de libmodbus_3.1.4-2.debian.tar.xz
-    dpkg-source: info: mise en place de Fix-typo.patch
-    dpkg-source: info: mise en place de Fix-float-endianness-issue-on-big-endian-arch.patch
-
-Modifiez en fonction de votre distribution, par exemple pour xenial `amd64` :
-
-    $ dget -x -u https://launchpad.net/ubuntu/+archive/primary/+sourcefiles/libmodbus/3.1.4-2/libmodbus_3.1.4-2.dsc
 
 ### Installez les dépendances de `libmodbus`
 
@@ -104,32 +54,18 @@ On voit qu'il faut l'installer depuis le dépôt xenial-backports :
 
     $ sudo apt install -t xenial-backports debhelper
     $ sudo apt install --no-install-recommends asciidoc xmlto psmisc
-    
 
-### Modifications
 
-Pour mettre à jour les sources avec les modifications epsilonrt :
+### Cloner le dépôt et y descendre
 
-    $ cd libmodbus-3.1.4
+    $ git clone https://github.com/epsilonrt/libmodbus-deb-backport.git
+    $ cd libmodbus-deb-backport
+    $ tar xvzf libmodbusepsi-3.1.4.orig.tar.gz
+    $ cp -a debian libmodbusepsi-3.1.4
+    $ cd libmodbusepsi-3.1.4
     $ cp ../debian/changelog debian
-    $ patch -p1 < ./debian/patches/Add-deactivation-of-RTU-address-filtering.patch
-
-Si pas de modification, mettre un numéro de révision de backport dans le journal des modifications
-
-    $ cd libmodbus-3.1.4
-    $ dch --local ~epsi+ --distribution stretch  "build for stretch-backports."
-
-Modifiez en fonction de votre distribution, par exemple pour xenial:
-
-    $ dch --local ~epsi+ --distribution xenial  "build for xenial-backports."
-
-
-### Correction du fichier `libmodbus-dev.docs` 
-
-Cette opération doit être effectuée que si la version de `debhelper` est 
-inférieure à 11 (cas de `stretch` et `xenial`, mais pas pour `bionic`)
-
-    $ cp ../debian/libmodbus-dev.docs debian
+    $ tar xvzf libmodbusepsi-3.1.4.orig.tar.gz
+    $ for i in $(cat debian/patches/series); do patch -p1 < debian/patches/$i; done
 
 ### Compilez correctement le paquet, sans signature GPG
 
@@ -138,10 +74,11 @@ inférieure à 11 (cas de `stretch` et `xenial`, mais pas pour `bionic`)
        dh_testdir -O--exclude=.la
        dh_update_autotools_config -O--exclude=.la
        dh_autoreconf -O--exclude=.la
+    libtoolize: putting auxiliary files in AC_CONFIG_AUX_DIR, 'build-aux'.
     [.............]
-    dpkg-deb: building package 'libmodbus5-dbgsym' in '../libmodbus5-dbgsym_3.1.4-2~epsi+1_arm64.deb'.
-    dpkg-deb: building package 'libmodbus5' in '../libmodbus5_3.1.4-2~epsi+1_arm64.deb'.
-    dpkg-deb: building package 'libmodbus-dev' in '../libmodbus-dev_3.1.4-2~epsi+1_arm64.deb'.
+    dpkg-deb: building package 'libmodbusepsi5-dbgsym' in '../libmodbusepsi5-dbgsym_3.1.4-5_amd64.deb'.
+    dpkg-deb: building package 'libmodbusepsi5' in '../libmodbusepsi5_3.1.4-5_amd64.deb'.
+    dpkg-deb: building package 'libmodbusepsi-dev' in '../libmodbusepsi-dev_3.1.4-5_amd64.deb'.
 
 Si l'on souhaite recompiler après une modification, il faudra au préalable faire un `clean`
 
@@ -151,29 +88,32 @@ Si l'on souhaite recompiler après une modification, il faudra au préalable fai
 ### Vérifiez les paquets
 
     $ cd ..
-    $ dpkg -I libmodbus5_3.1.4-2~epsi+1_arm64.deb 
+    $ dpkg -I ../libmodbusepsi5_3.1.4-5_amd64.deb 
      nouveau paquet Debian, version 2.0.
-     taille 29022 octets : archive de contrôle=1329 octets.
-         516 octets,    17 lignes      control              
-         435 octets,     6 lignes      md5sums              
-          23 octets,     1 lignes      shlibs               
-        2387 octets,    72 lignes      symbols              
+     taille 31676 octets : archive de contrôle=1340 octets.
+         588 octets,    19 lignes      control              
+         458 octets,     6 lignes      md5sums              
+          31 octets,     1 lignes      shlibs               
+        2473 octets,    74 lignes      symbols              
           60 octets,     2 lignes      triggers             
-     Package: libmodbus5
-     Source: libmodbus
-     Version: 3.1.4-2~epsi+1
-     Architecture: arm64
-     Maintainer: SZ Lin (林上智) <szlin@debian.org>
-     Installed-Size: 71
-     Depends: libc6 (>= 2.17)
+     Package: libmodbusepsi5
+     Source: libmodbusepsi
+     Version: 3.1.4-5
+     Architecture: amd64
+     Maintainer: Pascal Jean (epsilonrt) <epsilonrt@gmail.com>
+     Installed-Size: 79
+     Depends: libc6 (>= 2.15)
+     Conflicts: libmodbus5
+     Replaces: libmodbus5
      Section: libs
      Priority: optional
      Multi-Arch: same
      Homepage: http://libmodbus.org/
-     Description: library for the Modbus protocol
+     Description: library for the Modbus protocol (epsilonrt version)
       A Modbus library written in C, to send/receive data with a device which
       respects the Modbus protocol. This library can use a serial port or an
       Ethernet connection.
       .
       This package contains the shared library.
+
 

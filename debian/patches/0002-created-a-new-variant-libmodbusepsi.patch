@@ -1,0 +1,203 @@
+From 3728711eafa458c2f2c1bbc3be7563f2781af6a4 Mon Sep 17 00:00:00 2001
+From: epsilonrt <epsilonrt@gmail.com>
+Date: Wed, 26 Feb 2020 15:42:27 +0100
+Subject: [PATCH 2/3] created a new variant -> libmodbusepsi
+
+In order to experiment with new features in libmodbuspp.
+
+Signed-off-by: epsilonrt <epsilonrt@gmail.com>
+---
+ .gitignore          |  2 +-
+ AUTHORS             |  3 ++-
+ Makefile.am         |  6 +++---
+ README.md           |  4 ++--
+ configure.ac        |  8 ++++----
+ libmodbus.pc.in     | 10 ----------
+ libmodbusepsi.pc.in | 10 ++++++++++
+ src/Makefile.am     | 12 ++++++------
+ tests/Makefile.am   |  2 +-
+ 9 files changed, 29 insertions(+), 28 deletions(-)
+ delete mode 100644 libmodbus.pc.in
+ create mode 100644 libmodbusepsi.pc.in
+
+diff --git a/.gitignore b/.gitignore
+index c231704..8519d7c 100644
+--- a/.gitignore
++++ b/.gitignore
+@@ -25,7 +25,7 @@ Makefile.in
+ /libtool
+ /ltmain.sh
+ /missing
+-/libmodbus.pc
++/libmodbusepsi.pc
+ /stamp-h1
+ /*.sublime-*
+ src/modbus-version.h
+diff --git a/AUTHORS b/AUTHORS
+index 188dcb8..ac83b04 100644
+--- a/AUTHORS
++++ b/AUTHORS
+@@ -5,4 +5,5 @@ oldfaber <oldfaber@gmail.com>
+ Hannu Vuolasaho <vuokkosetae@gmail.com> - CLA
+ Michael Heimpold <mhei@heimpold.de> - CLA
+ Jimmy Bergström <jimmy@ekontroll.com> - CLA
+-Jakob Bysewski <kontakt@jbysewski.de> - CLA
+\ No newline at end of file
++Jakob Bysewski <kontakt@jbysewski.de> - CLA
++Pascal Jean <epsilonrt@gmail.com>
+diff --git a/Makefile.am b/Makefile.am
+index a0a165e..71434c6 100644
+--- a/Makefile.am
++++ b/Makefile.am
+@@ -3,9 +3,9 @@ ACLOCAL_AMFLAGS = -I m4 ${ACLOCAL_FLAGS}
+ AM_MAKEFLAGS = --no-print-directory
+ 
+ pkgconfigdir = $(libdir)/pkgconfig
+-pkgconfig_DATA = libmodbus.pc
+-EXTRA_DIST = libmodbus.pc.in
+-CLEANFILES += libmodbus.pc
++pkgconfig_DATA = libmodbusepsi.pc
++EXTRA_DIST = libmodbusepsi.pc.in
++CLEANFILES += libmodbusepsi.pc
+ 
+ dist_doc_DATA = MIGRATION README.md
+ 
+diff --git a/README.md b/README.md
+index d41e5f7..713b4f7 100644
+--- a/README.md
++++ b/README.md
+@@ -42,7 +42,7 @@ You can change installation directory with prefix option, eg. `./configure
+ properly set up on your system (*/etc/ld.so.conf.d*) and library cache is up to
+ date (run `ldconfig` as root if required).
+ 
+-The library provides a *libmodbus.pc* file to use with `pkg-config` to ease your
++The library provides a *libmodbusepsi.pc* file to use with `pkg-config` to ease your
+ program compilation and linking.
+ 
+ If you want to compile with Microsoft Visual Studio, you need to install
+@@ -87,4 +87,4 @@ It's also possible to run the unit tests with `make check`.
+ To report a bug or to contribute
+ --------------------------------
+ 
+-See [CONTRIBUTING](CONTRIBUTING.md) document.
+\ No newline at end of file
++See [CONTRIBUTING](CONTRIBUTING.md) document.
+diff --git a/configure.ac b/configure.ac
+index a568e47..845f2d3 100644
+--- a/configure.ac
++++ b/configure.ac
+@@ -22,10 +22,10 @@ m4_define([libmodbus_version],
+     [libmodbus_version_major.libmodbus_version_minor.libmodbus_version_micro])
+ 
+ AC_PREREQ([2.63])
+-AC_INIT([libmodbus],
++AC_INIT([libmodbusepsi],
+         [libmodbus_version],
+-        [https://github.com/stephane/libmodbus/issues],
+-        [libmodbus],
++        [https://github.com/epsilonrt/libmodbus/issues],
++        [libmodbusepsi],
+         [http://libmodbus.org/])
+ AC_CONFIG_SRCDIR([src/modbus.c])
+ AC_CONFIG_AUX_DIR([build-aux])
+@@ -161,7 +161,7 @@ AC_CONFIG_FILES([
+         src/win32/modbus.dll.manifest
+         tests/Makefile
+         doc/Makefile
+-        libmodbus.pc
++        libmodbusepsi.pc
+ ])
+ 
+ AC_OUTPUT
+diff --git a/libmodbus.pc.in b/libmodbus.pc.in
+deleted file mode 100644
+index f1a9cbf..0000000
+--- a/libmodbus.pc.in
++++ /dev/null
+@@ -1,10 +0,0 @@
+-prefix=@prefix@
+-exec_prefix=@exec_prefix@
+-libdir=@libdir@
+-includedir=@includedir@
+-
+-Name: modbus
+-Description: Modbus library
+-Version: @VERSION@
+-Libs: -L${libdir} -lmodbus
+-Cflags: -I${includedir}/modbus
+diff --git a/libmodbusepsi.pc.in b/libmodbusepsi.pc.in
+new file mode 100644
+index 0000000..d0d84f2
+--- /dev/null
++++ b/libmodbusepsi.pc.in
+@@ -0,0 +1,10 @@
++prefix=@prefix@
++exec_prefix=@exec_prefix@
++libdir=@libdir@
++includedir=@includedir@
++
++Name: modbusepsi
++Description: Modbus library (epsilonrt version)
++Version: @VERSION@
++Libs: -L${libdir} -lmodbusepsi
++Cflags: -I${includedir}/modbusepsi
+diff --git a/src/Makefile.am b/src/Makefile.am
+index 551fe43..3d51189 100644
+--- a/src/Makefile.am
++++ b/src/Makefile.am
+@@ -1,5 +1,5 @@
+ EXTRA_DIST =
+-lib_LTLIBRARIES = libmodbus.la
++lib_LTLIBRARIES = libmodbusepsi.la
+ 
+ AM_CPPFLAGS = \
+     -include $(top_builddir)/config.h \
+@@ -9,7 +9,7 @@ AM_CPPFLAGS = \
+ 
+ AM_CFLAGS = ${my_CFLAGS}
+ 
+-libmodbus_la_SOURCES = \
++libmodbusepsi_la_SOURCES = \
+         modbus.c \
+         modbus.h \
+         modbus-data.c \
+@@ -22,19 +22,19 @@ libmodbus_la_SOURCES = \
+         modbus-tcp-private.h \
+         modbus-version.h
+ 
+-libmodbus_la_LDFLAGS = -no-undefined \
++libmodbusepsi_la_LDFLAGS = -no-undefined \
+         -version-info $(LIBMODBUS_LT_VERSION_INFO)
+ 
+ if OS_WIN32
+-libmodbus_la_LIBADD = -lwsock32
++libmodbusepsi_la_LIBADD = -lwsock32
+ endif
+ 
+ if OS_QNX
+-libmodbus_la_LIBADD = -lsocket
++libmodbusepsi_la_LIBADD = -lsocket
+ endif
+ 
+ # Header files to install
+-libmodbusincludedir = $(includedir)/modbus
++libmodbusincludedir = $(includedir)/modbusepsi
+ libmodbusinclude_HEADERS = modbus.h modbus-version.h modbus-rtu.h modbus-tcp.h
+ 
+ DISTCLEANFILES = modbus-version.h
+diff --git a/tests/Makefile.am b/tests/Makefile.am
+index 38fa21c..7de2e40 100644
+--- a/tests/Makefile.am
++++ b/tests/Makefile.am
+@@ -11,7 +11,7 @@ noinst_PROGRAMS = \
+ 	version
+ 
+ common_ldflags = \
+-	$(top_builddir)/src/libmodbus.la
++	$(top_builddir)/src/libmodbusepsi.la
+ 
+ bandwidth_server_one_SOURCES = bandwidth-server-one.c
+ bandwidth_server_one_LDADD = $(common_ldflags)
+-- 
+2.11.0
+

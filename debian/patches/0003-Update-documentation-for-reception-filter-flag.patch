@@ -1,0 +1,139 @@
+From 77cf3075c8dc4f48c76d41ccc7fd2d4c0986002f Mon Sep 17 00:00:00 2001
+From: epsilonrt <epsilonrt@gmail.com>
+Date: Wed, 26 Feb 2020 16:09:45 +0100
+Subject: [PATCH 3/3] Update documentation for reception filter flag
+
+Signed-off-by: epsilonrt <epsilonrt@gmail.com>
+---
+ doc/Makefile.am                    |  4 +++-
+ doc/libmodbus.txt                  |  2 +-
+ doc/modbus_rtu_get_recv_filter.txt | 43 ++++++++++++++++++++++++++++++++++++++
+ doc/modbus_rtu_set_recv_filter.txt | 38 +++++++++++++++++++++++++++++++++
+ 4 files changed, 85 insertions(+), 2 deletions(-)
+ create mode 100644 doc/modbus_rtu_get_recv_filter.txt
+ create mode 100644 doc/modbus_rtu_set_recv_filter.txt
+
+diff --git a/doc/Makefile.am b/doc/Makefile.am
+index 48c0819..2c7afde 100644
+--- a/doc/Makefile.am
++++ b/doc/Makefile.am
+@@ -59,7 +59,9 @@ TXT3 = \
+         modbus_write_bits.txt \
+         modbus_write_bit.txt \
+         modbus_write_registers.txt \
+-        modbus_write_register.txt
++        modbus_write_register.txt \
++        modbus_rtu_get_recv_filter.txt \
++        modbus_rtu_set_recv_filter.txt
+ TXT7 = libmodbus.txt
+ 
+ EXTRA_DIST = asciidoc.conf $(TXT3) $(TXT7)
+diff --git a/doc/libmodbus.txt b/doc/libmodbus.txt
+index d7af689..0273501 100644
+--- a/doc/libmodbus.txt
++++ b/doc/libmodbus.txt
+@@ -11,7 +11,7 @@ SYNOPSIS
+ --------
+ *#include <modbus.h>*
+ 
+-*cc* \`pkg-config --cflags --libs libmodbus` 'files'
++*cc* \`pkg-config --cflags --libs libmodbusepsi` 'files'
+ 
+ 
+ DESCRIPTION
+diff --git a/doc/modbus_rtu_get_recv_filter.txt b/doc/modbus_rtu_get_recv_filter.txt
+new file mode 100644
+index 0000000..ff8b1de
+--- /dev/null
++++ b/doc/modbus_rtu_get_recv_filter.txt
+@@ -0,0 +1,43 @@
++modbus_rtu_get_recv_filter(3)
++=============================
++
++
++NAME
++----
++modbus_rtu_get_recv_filter - get the current reception filter _flag_
++
++
++SYNOPSIS
++--------
++*int modbus_rtu_get_recv_filter(modbus_t *'ctx');*
++
++
++DESCRIPTION
++-----------
++The *modbus_rtu_get_recv_filter()* function shall get the current reception 
++filter flag of the libmodbus context _ctx_. The possible returned values are 
++`FALSE` or `TRUE`. By default, the boolean flag is set to `TRUE`. When the value 
++_flag_ is set to `TRUE`, only messages to the address of the slave defined in 
++the context and broadcast messages are returned by *modbus_receive*, the others
++are ignored. When the value _flag_ is set to `FALSE` all messages are returned 
++by *modbus_receive*.
++
++This function can only be used with a context using a RTU backend.
++
++
++RETURN VALUE
++------------
++The function shall return the current reception filter _flag_ if successful. 
++Otherwise it shall return -1 and set errno.
++
++
++SEE ALSO
++--------
++linkmb:modbus_receive[3]
++linkmb:modbus_rtu_get_recv_filter[3]
++
++
++AUTHORS
++-------
++The libmodbus documentation was written by Stéphane Raimbault
++<stephane.raimbault@gmail.com>
+diff --git a/doc/modbus_rtu_set_recv_filter.txt b/doc/modbus_rtu_set_recv_filter.txt
+new file mode 100644
+index 0000000..6f770c5
+--- /dev/null
++++ b/doc/modbus_rtu_set_recv_filter.txt
+@@ -0,0 +1,38 @@
++modbus_rtu_set_recv_filter(3)
++=============================
++
++NAME
++----
++modbus_rtu_set_recv_filter - set reception filter flag of the context
++
++
++SYNOPSIS
++--------
++*int modbus_rtu_set_recv_filter(modbus_t *'ctx', int 'flag');*
++
++
++DESCRIPTION
++-----------
++The *modbus_rtu_set_recv_filter()* function shall set the reception filter flag 
++of the *modbus_t* context by using the argument _flag_. By default, the boolean 
++flag is set to `TRUE`.When the value _flag_ is set to `TRUE`, only messages to 
++the address of the slave defined in the context and broadcast messages are 
++returned by *modbus_receive*, the others are ignored. When the value _flag_ is 
++set to `FALSE` all messages are returned by *modbus_receive*.
++
++This function can only be used with a context using a RTU backend.
++
++RETURN VALUE
++------------
++The function shall return 0 if successful. Otherwise it shall return -1 and set errno.
++
++
++SEE ALSO
++--------
++linkmb:modbus_receive[3]
++linkmb:modbus_rtu_get_recv_filter[3]
++
++AUTHORS
++-------
++The libmodbus documentation was written by Stéphane Raimbault
++<stephane.raimbault@gmail.com>
+-- 
+2.11.0
+

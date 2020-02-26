@@ -1,0 +1,6 @@
+Fix-float-endianness-issue-on-big-endian-arch.patch
+Fix-typo.patch
+0001-Add-deactivation-of-RTU-address-filtering.patch
+0002-created-a-new-variant-libmodbusepsi.patch
+0003-Update-documentation-for-reception-filter-flag.patch
+
