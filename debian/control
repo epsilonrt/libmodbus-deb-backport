@@ -13,7 +13,6 @@ Package: libmodbusepsi5
 Architecture: any
 Depends: ${shlibs:Depends}, ${misc:Depends}
 Replaces: libmodbus5
-Conflicts: libmodbus5
 Pre-Depends: ${misc:Pre-Depends}
 Multi-Arch: same
 Description: library for the Modbus protocol (epsilonrt version)
@@ -29,7 +28,6 @@ Architecture: any
 Multi-Arch: same
 Depends: libmodbusepsi5 (= ${binary:Version}), ${shlibs:Depends}, ${misc:Depends}
 Replaces: libmodbus-dev
-Conflicts: libmodbus-dev
 Description: development files for the Modbus protocol library (epsilonrt version)
  A Modbus library written in C, to send/receive data with a device which
  respects the Modbus protocol. This library can use a serial port or an

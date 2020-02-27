@@ -56,17 +56,16 @@ On voit qu'il faut l'installer depuis le dépôt xenial-backports :
     $ sudo apt install --no-install-recommends asciidoc xmlto psmisc
 
 
-### Cloner le dépôt et y descendre
+### Cloner le dépôt et créer les paquets
 
     $ git clone https://github.com/epsilonrt/libmodbus-deb-backport.git
     $ git checkout epsilonrt
     $ cd libmodbus-deb-backport
-    $ tar xvzf libmodbusepsi-3.1.4.orig.tar.gz
-    $ cp -a debian libmodbusepsi-3.1.4
-    $ cd libmodbusepsi-3.1.4
-    $ for i in $(cat debian/patches/series); do patch -p1 < debian/patches/$i; done
+    $ ./build
 
-### Compilez correctement le paquet, sans signature GPG
+Les fichiers deb sont créés dans le répertoire parent.
+
+La commande pour compilez correctement le paquet, sans signature GPG, en cas d'erreur :
 
     $ fakeroot debian/rules binary
     dh binary --with autoreconf --exclude=.la

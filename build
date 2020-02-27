@@ -1,0 +1,10 @@
+#!/bin/bash
+
+test -f libmodbus_3.1.4.orig.tar.gz || dget -d http://deb.debian.org/debian/pool/main/libm/libmodbus/libmodbus_3.1.4-2.dsc
+rm -fr libmodbusepsi-3.1.4
+tar xvzf libmodbus_3.1.4.orig.tar.gz
+mv libmodbus-3.1.4 libmodbusepsi-3.1.4
+cp -a debian libmodbusepsi-3.1.4
+cd libmodbusepsi-3.1.4
+for i in $(cat debian/patches/series); do patch -p1 < debian/patches/$i; done
+fakeroot debian/rules binary
