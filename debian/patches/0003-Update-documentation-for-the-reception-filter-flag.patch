@@ -1,15 +1,14 @@
-From 77cf3075c8dc4f48c76d41ccc7fd2d4c0986002f Mon Sep 17 00:00:00 2001
+From a599baef040da8597539c2538c14b51f04f6be79 Mon Sep 17 00:00:00 2001
 From: epsilonrt <epsilonrt@gmail.com>
-Date: Wed, 26 Feb 2020 16:09:45 +0100
-Subject: [PATCH 3/3] Update documentation for reception filter flag
+Date: Thu, 27 Feb 2020 19:28:05 +0100
+Subject: [PATCH 3/3] Update documentation for the reception filter flag
 
 Signed-off-by: epsilonrt <epsilonrt@gmail.com>
 ---
  doc/Makefile.am                    |  4 +++-
- doc/libmodbus.txt                  |  2 +-
  doc/modbus_rtu_get_recv_filter.txt | 43 ++++++++++++++++++++++++++++++++++++++
  doc/modbus_rtu_set_recv_filter.txt | 38 +++++++++++++++++++++++++++++++++
- 4 files changed, 85 insertions(+), 2 deletions(-)
+ 3 files changed, 84 insertions(+), 1 deletion(-)
  create mode 100644 doc/modbus_rtu_get_recv_filter.txt
  create mode 100644 doc/modbus_rtu_set_recv_filter.txt
 
@@ -28,19 +27,6 @@ index 48c0819..2c7afde 100644
  TXT7 = libmodbus.txt
  
  EXTRA_DIST = asciidoc.conf $(TXT3) $(TXT7)
-diff --git a/doc/libmodbus.txt b/doc/libmodbus.txt
-index d7af689..0273501 100644
---- a/doc/libmodbus.txt
-+++ b/doc/libmodbus.txt
-@@ -11,7 +11,7 @@ SYNOPSIS
- --------
- *#include <modbus.h>*
- 
--*cc* \`pkg-config --cflags --libs libmodbus` 'files'
-+*cc* \`pkg-config --cflags --libs libmodbusepsi` 'files'
- 
- 
- DESCRIPTION
 diff --git a/doc/modbus_rtu_get_recv_filter.txt b/doc/modbus_rtu_get_recv_filter.txt
 new file mode 100644
 index 0000000..ff8b1de
@@ -92,7 +78,7 @@ index 0000000..ff8b1de
 +<stephane.raimbault@gmail.com>
 diff --git a/doc/modbus_rtu_set_recv_filter.txt b/doc/modbus_rtu_set_recv_filter.txt
 new file mode 100644
-index 0000000..6f770c5
+index 0000000..9767b69
 --- /dev/null
 +++ b/doc/modbus_rtu_set_recv_filter.txt
 @@ -0,0 +1,38 @@
@@ -113,7 +99,7 @@ index 0000000..6f770c5
 +-----------
 +The *modbus_rtu_set_recv_filter()* function shall set the reception filter flag 
 +of the *modbus_t* context by using the argument _flag_. By default, the boolean 
-+flag is set to `TRUE`.When the value _flag_ is set to `TRUE`, only messages to 
++flag is set to `TRUE`. When the value _flag_ is set to `TRUE`, only messages to 
 +the address of the slave defined in the context and broadcast messages are 
 +returned by *modbus_receive*, the others are ignored. When the value _flag_ is 
 +set to `FALSE` all messages are returned by *modbus_receive*.
