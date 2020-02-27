@@ -59,8 +59,8 @@ On voit qu'il faut l'installer depuis le dépôt xenial-backports :
 ### Cloner le dépôt et créer les paquets
 
     $ git clone https://github.com/epsilonrt/libmodbus-deb-backport.git
-    $ git checkout epsilonrt
     $ cd libmodbus-deb-backport
+    $ git checkout epsilonrt
     $ ./build
 
 Les fichiers deb sont créés dans le répertoire parent.
