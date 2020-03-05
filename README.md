@@ -60,7 +60,7 @@ On voit qu'il faut l'installer depuis le dépôt xenial-backports :
 
     $ git clone https://github.com/epsilonrt/libmodbus-deb-backport.git
     $ cd libmodbus-deb-backport
-    $ git checkout epsilonrt
+    $ git checkout libmodbusepsi-3.1.6
     $ ./build
 
 Les fichiers deb sont créés dans le répertoire parent.
@@ -86,22 +86,21 @@ Si l'on souhaite recompiler après une modification, il faudra au préalable fai
 ### Vérifiez les paquets
 
     $ cd ..
-    $ dpkg -I ../libmodbusepsi5_3.1.4-5_amd64.deb 
+    $ dpkg -I libmodbusepsi5_3.1.6-5_amd64.deb 
      nouveau paquet Debian, version 2.0.
-     taille 31676 octets : archive de contrôle=1340 octets.
-         588 octets,    19 lignes      control              
+     taille 32692 octets : archive de contrôle=1371 octets.
+         566 octets,    18 lignes      control              
          458 octets,     6 lignes      md5sums              
           31 octets,     1 lignes      shlibs               
-        2473 octets,    74 lignes      symbols              
+        2623 octets,    78 lignes      symbols              
           60 octets,     2 lignes      triggers             
      Package: libmodbusepsi5
      Source: libmodbusepsi
-     Version: 3.1.4-5
+     Version: 3.1.6-5
      Architecture: amd64
      Maintainer: Pascal Jean (epsilonrt) <epsilonrt@gmail.com>
-     Installed-Size: 79
+     Installed-Size: 81
      Depends: libc6 (>= 2.15)
-     Conflicts: libmodbus5
      Replaces: libmodbus5
      Section: libs
      Priority: optional

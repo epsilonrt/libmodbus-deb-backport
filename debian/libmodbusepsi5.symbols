@@ -1,4 +1,5 @@
 libmodbusepsi.so.5 libmodbusepsi5 #MINVER#
+* Build-Depends-Package: libudev-dev
  _error_print@Base 3.0.2
  _modbus_init_common@Base 3.0.2
  _modbus_receive_msg@Base 3.1.4
@@ -69,6 +70,9 @@ libmodbusepsi.so.5 libmodbusepsi5 #MINVER#
  modbus_write_bits@Base 3.0.2
  modbus_write_register@Base 3.0.2
  modbus_write_registers@Base 3.0.2
- modbus_rtu_set_recv_filter@Base 3.1.4
- modbus_rtu_get_recv_filter@Base 3.1.4
  strlcpy@Base 3.0.2
+ modbus_get_indication_timeout@Base 3.1.6
+ modbus_set_indication_timeout@Base 3.1.6
+ modbus_get_slave@Base 3.1.6
+ modbus_rtu_set_recv_filter@Base 3.1.6
+ modbus_rtu_get_recv_filter@Base 3.1.6

@@ -1,0 +1,28 @@
+From 4656d082cda7f6572e933acb2cc8fc7d5796c600 Mon Sep 17 00:00:00 2001
+From: epsilonrt <epsilonrt@gmail.com>
+Date: Thu, 5 Mar 2020 14:27:58 +0100
+Subject: [PATCH 4/4] Fixes empty libmodbusepsi.pc.in problem
+
+Signed-off-by: epsilonrt <epsilonrt@gmail.com>
+---
+ libmodbusepsi.pc.in | 10 ++++++++++
+ 1 file changed, 10 insertions(+)
+
+diff --git a/libmodbusepsi.pc.in b/libmodbusepsi.pc.in
+index e69de29..54f4ceb 100644
+--- a/libmodbusepsi.pc.in
++++ b/libmodbusepsi.pc.in
+@@ -0,0 +1,10 @@
++prefix=@prefix@
++exec_prefix=@exec_prefix@
++libdir=@libdir@
++includedir=@includedir@
++
++Name: modbusepsi
++Description: Modbus library  (epsilonrt version)
++Version: @VERSION@
++Libs: -L${libdir} -lmodbusepsi
++Cflags: -I${includedir}/modbusepsi
+-- 
+2.11.0
+

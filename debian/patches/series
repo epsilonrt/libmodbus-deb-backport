@@ -3,3 +3,5 @@ Fix-typo.patch
 0001-creating-fork-libmodbusepsi.patch
 0002-Add-disabling-flag-for-RTU-address-filtering.patch
 0003-Update-documentation-for-the-reception-filter-flag.patch
+0004-Fixes-empty-libmodbusepsi.pc.in-problem.patch
+

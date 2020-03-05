@@ -1,7 +1,7 @@
 From c83be1270f827efe04a62463ee1ce71bdf735eee Mon Sep 17 00:00:00 2001
 From: epsilonrt <epsilonrt@gmail.com>
 Date: Thu, 27 Feb 2020 19:18:23 +0100
-Subject: [PATCH 2/3] Add disabling flag for RTU address filtering
+Subject: [PATCH 2/4] Add disabling flag for RTU address filtering
 
 Addition of the modbus_rtu_set_recv_filter() and modbus_rtu_get_recv_filter() functions.
 This makes it possible to process on reception all messages in RTU mode.

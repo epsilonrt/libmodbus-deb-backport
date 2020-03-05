@@ -1,7 +1,7 @@
 From a599baef040da8597539c2538c14b51f04f6be79 Mon Sep 17 00:00:00 2001
 From: epsilonrt <epsilonrt@gmail.com>
 Date: Thu, 27 Feb 2020 19:28:05 +0100
-Subject: [PATCH 3/3] Update documentation for the reception filter flag
+Subject: [PATCH 3/4] Update documentation for the reception filter flag
 
 Signed-off-by: epsilonrt <epsilonrt@gmail.com>
 ---
